@@ -131,8 +131,9 @@ clone_repo(){
 install(){
     echo "进行安装。。。"
     # 把v2ray伪装成其他文件夹（比如cherbim，请自行命名，最好全英文）
-    mv ${SH_PATH}/IBMYGo/cherbim/v2ray ${SH_PATH}/IBMYGo/newcastlecy/${IBM_APP_NUM}/${IBM_V2_NAME}
-    mv ${SH_PATH}/IBMYGo/w2r/${IBM_APP_NUM}/${IBM_V2_NAME}/v2ray ${SH_PATH}/IBMYGo/newcastlecy/${IBM_APP_NUM}/${IBM_V2_NAME}/${IBM_V2_NAME}
+    mv ${SH_PATH}/IBMYGo/cherbim/v2ray ${SH_PATH}/IBMYGo/w2r/${IBM_APP_NUM}/${IBM_V2_NAME}
+    mv ${SH_PATH}/IBMYGo/w2r/${IBM_APP_NUM}/${IBM_V2_NAME}/v2ray ${SH_PATH}/IBMYGo/w2r/${IBM_APP_NUM}/${IBM_V2_NAME}/${IBM_V2_NAME}
+    mv ${SH_PATH}/IBMYGo/w2r ${SH_PATH}/IBMYGo/newcastlecy
     cd ${SH_PATH}/IBMYGo/newcastlecy/${IBM_APP_NUM}/${IBM_V2_NAME}/
     tar czvf 1.tar config.json
     rm -rf ${SH_PATH}/IBMYGo/newcastlecy/${IBM_APP_NUM}/${IBM_V2_NAME}/config.json
