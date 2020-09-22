@@ -30,7 +30,7 @@ create_mainfest_file(){
     echo "生成随机UUID：${UUID}"
     
     # 设置容器配置文件
-    cat >  ${SH_PATH}/IBMYesPLus/w2r/${IBM_APP_NUM}/manifest.yml  << EOF
+    cat >  ${SH_PATH}/IBMYGo/newcastlecy/${IBM_APP_NUM}/manifest.yml  << EOF
     applications:
     - path: .
       name: ${IBM_APP_NAME}
@@ -38,12 +38,12 @@ create_mainfest_file(){
       memory: ${IBM_MEM_SIZE}M
 EOF
 	# 配置预启动（容器开机后优先启动）
-	cat >  ${SH_PATH}/IBMYesPLus/w2r/${IBM_APP_NUM}/Procfile  << EOF
+	cat >  ${SH_PATH}/IBMYGo/newcastlecy/${IBM_APP_NUM}/Procfile  << EOF
     web: ./start.sh
 
 EOF
 	# 配置预启动文件
-	cat >  ${SH_PATH}/IBMYesPLus/w2r/${IBM_APP_NUM}/start.sh  << EOF
+	cat >  ${SH_PATH}/IBMYGo/newcastlecy/${IBM_APP_NUM}/start.sh  << EOF
     #!/bin/bash
     tar zxvf ./${IBM_V2_NAME}/1.tar -C ./${IBM_V2_NAME}
     chmod 0755 ./${IBM_V2_NAME}/config.json
@@ -58,7 +58,7 @@ EOF
 EOF
 
 	# 配置v2ray
-    cat >  ${SH_PATH}/IBMYesPLus/cherbim/v2ray/config.json  << EOF
+    cat >  ${SH_PATH}/IBMYGo/cherbim/v2ray/config.json  << EOF
     {
         "inbounds": [
             {
@@ -88,16 +88,16 @@ EOF
         ]
     }
 EOF
-    chmod 0755 ${SH_PATH}/IBMYesPLus/w2r/${IBM_APP_NUM}/start.sh
-    chmod 0755 ${SH_PATH}/IBMYesPLus/w2r/${IBM_APP_NUM}/cf
+    chmod 0755 ${SH_PATH}/IBMYGo/newcastlecy/${IBM_APP_NUM}/start.sh
+    chmod 0755 ${SH_PATH}/IBMYGo/newcastlecy/${IBM_APP_NUM}/cf
     echo "配置完成。"
 }
 
 clone_repo(){
     echo "进行初始化。。。"
-    rm -rf IBMYesPLus
-    git clone https://github.com/w2r/IBMYesPLus.git
-    cd IBMYesPLus
+    rm -rf IBMYGo
+    git clone https://github.com/newcastlecy/IBMYGo.git
+    cd IBMYGo
     git submodule update --init --recursive
     cd cherbim/v2ray
     # Upgrade V2Ray to the latest version
@@ -124,19 +124,19 @@ clone_repo(){
     rm latest-v2ray.zip
     
     chmod 0755 ./*
-    cd ${SH_PATH}/IBMYesPLus/w2r/${IBM_APP_NUM}
+    cd ${SH_PATH}/IBMYGo/newcastlecy/${IBM_APP_NUM}
     echo "初始化完成。"
 }
 
 install(){
     echo "进行安装。。。"
     # 把v2ray伪装成其他文件夹（比如cherbim，请自行命名，最好全英文）
-    mv ${SH_PATH}/IBMYesPLus/cherbim/v2ray ${SH_PATH}/IBMYesPLus/w2r/${IBM_APP_NUM}/${IBM_V2_NAME}
-    mv ${SH_PATH}/IBMYesPLus/w2r/${IBM_APP_NUM}/${IBM_V2_NAME}/v2ray ${SH_PATH}/IBMYesPLus/w2r/${IBM_APP_NUM}/${IBM_V2_NAME}/${IBM_V2_NAME}
-    cd ${SH_PATH}/IBMYesPLus/w2r/${IBM_APP_NUM}/${IBM_V2_NAME}/
+    mv ${SH_PATH}/IBMYGo/cherbim/v2ray ${SH_PATH}/IBMYGo/newcastlecy/${IBM_APP_NUM}/${IBM_V2_NAME}
+    mv ${SH_PATH}/IBMYGo/newcastlecy/${IBM_APP_NUM}/${IBM_V2_NAME}/v2ray ${SH_PATH}/IBMYGo/newcastlecy/${IBM_APP_NUM}/${IBM_V2_NAME}/${IBM_V2_NAME}
+    cd ${SH_PATH}/IBMYGo/newcastlecy/${IBM_APP_NUM}/${IBM_V2_NAME}/
     tar czvf 1.tar config.json
-    rm -rf ${SH_PATH}/IBMYesPLus/w2r/${IBM_APP_NUM}/${IBM_V2_NAME}/config.json
-    cd ${SH_PATH}/IBMYesPLus/w2r/${IBM_APP_NUM}
+    rm -rf ${SH_PATH}/IBMYGo/newcastlecy/${IBM_APP_NUM}/${IBM_V2_NAME}/config.json
+    cd ${SH_PATH}/IBMYGo/newcastlecy/${IBM_APP_NUM}
     # 把代码push到容器
     ibmcloud target --cf
     echo "N"|ibmcloud cf install
